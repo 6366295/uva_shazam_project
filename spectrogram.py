@@ -19,3 +19,12 @@ plt.show()
 
 spectrum, freqs, t = mlab.specgram(data, NFFT=NFFT, Fs=samplerate, noverlap=int(4096*0.5))
 
+a = []
+
+for i in range(0, len(spectrum)):
+    a.append(spectrum[i][5])
+
+plt.clf()
+plt.ylim([-2,2])
+plt.plot(freqs, a)
+plt.show()
