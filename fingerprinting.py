@@ -20,7 +20,7 @@ def generate_fingerprints(maxima, num_pairs=5):
                 dt = t2 - t1
                 p = hashlib.sha1('{0} {1} {2}'.format(f1, f2, dt)).hexdigest()
                 
-                print (t1, f1), (t2, f2)
+                #print (t1, f1), (t2, f2)
                 fingerprints.append((t1, p))
     
     return fingerprints
