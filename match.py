@@ -5,9 +5,9 @@ def match_fingerprints(fingerprints, test_data):
     
     # Vind het nummer in test_data dat het best overeenkomt met de opgegeven fingerprints
     
-    n_hits = []
-
-    for cur_test_data in test_data:
+    n_hits = {}
+    
+    for filename, cur_test_data in test_data.items():
         total_hits = []
         
         cur_match = (-1, -1)
@@ -39,11 +39,11 @@ def match_fingerprints(fingerprints, test_data):
             total_hits.append(consecutive_hits)
             cur_match = next_match(cur_match)
         
-        n_hits.append(total_hits)
+        n_hits[filename] = total_hits
     
     return n_hits
     
-fingerprints = [(2, 's'), (4, '2'), (5, 'q')]
-cur_test_data = [[(1, 'a'), (2, 's'), (3, 'q'), (4, '2'), (5, 'q')]]
+# fingerprints = [(2, 's'), (4, '2'), (5, 'q')]
+# cur_test_data = [[(1, 'a'), (2, 's'), (3, 'q'), (4, '2'), (5, 'q')]]
                 
-print match_fingerprints(fingerprints, cur_test_data)
+# print match_fingerprints(fingerprints, cur_test_data)
