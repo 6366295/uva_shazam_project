@@ -1,7 +1,7 @@
 import sys
 from numpy import NaN, Inf, arange, isscalar, asarray, array
 
-def peakdet(v, delta, x = None):
+def peakdet(v, delta, threshold, x = None):
     """
     Converted from MATLAB script at http://billauer.co.il/peakdet.html
     
@@ -59,7 +59,8 @@ def peakdet(v, delta, x = None):
         
         if lookformax:
             if this < mx-delta:
-                maxtab.append((mxpos, mx))
+                if mx > threshold:
+                    maxtab.append((mxpos, mx))
                 mn = this
                 mnpos = x[i]
                 lookformax = False
@@ -71,28 +72,3 @@ def peakdet(v, delta, x = None):
                 lookformax = True
 
     return array(maxtab), array(mintab)
-
-if __name__=="__main__":
-    import numpy as np
-    import matplotlib.pyplot as plt
-    import matplotlib.mlab as mlab
-    import scipy.io.wavfile as wavfile
-
-    samplerate, data = wavfile.read('wav\\Pyrrhula_pyrrhula_goudvink.wav')
-
-    NFFT = 4096
-
-    spectrum, freqs, t = mlab.specgram(data, NFFT=NFFT, Fs=samplerate, noverlap=int(4096*0.5))
-
-    a = []
-
-    for i in range(0, len(spectrum)):
-        a.append(spectrum[i][7])
-
-    from matplotlib.pyplot import plot, scatter, show
-    maxtab, mintab = peakdet(a,.3)
-    plot(a)
-    plt.ylim([-2,2])
-    scatter(array(maxtab)[:,0], array(maxtab)[:,1], color='blue')
-    scatter(array(mintab)[:,0], array(mintab)[:,1], color='red')
-    show()
